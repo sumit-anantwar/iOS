@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private var testing = false
     private var appIsLaunching = false
-    var authWindow: UIWindow?
+    var authViewController: AuthenticationViewController?
     var window: UIWindow?
 
     private lazy var bookmarkStore: BookmarkStore = BookmarkUserDefaults()
@@ -116,23 +116,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private func displayAuthenticationWindow() {
         let privacyStore = PrivacyUserDefaults()
-        guard authWindow == nil, let frame = window?.frame, privacyStore.authenticationEnabled else { return }
-        authWindow = UIWindow(frame: frame)
-        authWindow?.rootViewController = AuthenticationViewController.loadFromStoryboard()
-        authWindow?.makeKeyAndVisible()
-        window?.isHidden = true
+        authViewController?.dismiss(animated: false)
+        
+        if privacyStore.authenticationEnabled {
+            let authVC = AuthenticationViewController.loadFromStoryboard()
+            authViewController = authVC
+            topViewController?.present(authVC, animated: false)
+        }
     }
-
+    
     private func beginAuthentication() {
-        guard let controller = authWindow?.rootViewController as? AuthenticationViewController else { return }
-        controller.beginAuthentication { [weak self] in
+        authViewController?.beginAuthentication { [weak self] in
             self?.completeAuthentication()
         }
     }
 
     private func completeAuthentication() {
-        window?.makeKeyAndVisible()
-        authWindow = nil
+        authViewController = nil
+    }
+    
+    private var topViewController: UIViewController? {
+        var topController = window?.rootViewController
+        while let presentedViewController = topController?.presentedViewController {
+            topController = presentedViewController
+        }
+        return topController
     }
 
     private func startOnboardingFlowIfNotSeenBefore() {
