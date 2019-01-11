@@ -82,7 +82,7 @@ private class Loader {
     }
 
     private func loadDocumentLevelScripts() {
-        load(scripts: [ .document ] )
+        load(scripts: [ .document, .messaging ] )
     }
 
     private func loadContentBlockingScripts() {
@@ -97,9 +97,9 @@ private class Loader {
     private func loadContentBlockerDependencyScripts() {
 
         if #available(iOS 10, *) {
-            load(scripts: [ .messaging, .apbfilter], forMainFrameOnly: false)
+            load(scripts: [ .apbfilter], forMainFrameOnly: false)
         } else {
-            load(scripts: [ .messaging, .apbfilterES2015 ], forMainFrameOnly: false)
+            load(scripts: [ .apbfilterES2015 ], forMainFrameOnly: false)
         }
 
         javascriptLoader.load(script: .tlds, withReplacements: [ "${tlds}": tlds.json ], into: userContentController, forMainFrameOnly: false)

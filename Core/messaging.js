@@ -54,3 +54,14 @@ var duckduckgoMessaging = function() {
 
 	}
 }()
+
+var DDGMobile = function() {
+
+	function share(url) {
+		webkit.messageHandlers.share.postMessage(url);
+	}
+
+	return {
+		share: share
+	}
+}()

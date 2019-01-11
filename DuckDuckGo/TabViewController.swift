@@ -159,6 +159,7 @@ class TabViewController: UIViewController {
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.cache)
         webView.configuration.userContentController.add(self, name: MessageHandlerNames.log)
+        webView.configuration.userContentController.add(self, name: MessageHandlerNames.share)
         reloadScripts()
         updateUserAgent()
 
@@ -491,6 +492,7 @@ class TabViewController: UIViewController {
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.trackerDetected)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.cache)
         webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.log)
+        webView.configuration.userContentController.removeScriptMessageHandler(forName: MessageHandlerNames.share)
     }
     
     private func removeObservers() {
@@ -520,6 +522,7 @@ extension TabViewController: WKScriptMessageHandler {
         static let trackerDetected = "trackerDetectedMessage"
         static let cache = "cacheMessage"
         static let log = "log"
+        static let share = "share"
     }
     
     public func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
@@ -535,9 +538,27 @@ extension TabViewController: WKScriptMessageHandler {
         case MessageHandlerNames.log:
             handleLog(message: message)
 
+        case MessageHandlerNames.share:
+            handleShare(message: message)
+
         default:
             assertionFailure("Unhandled message: \(message.name)")
         }
+    }
+
+    private func handleShare(message: WKScriptMessage) {
+        guard let link = link else { return }
+        guard appUrls.isDuckDuckGo(url: link.url) else { return }
+        guard let string = message.body as? String else { return }
+        guard var url = URL(string: string) else { return }
+        print("***", #function, string)
+
+        if url.scheme != "http" && url.scheme != "https" {
+            guard let newUrl = URL(string: "http://\(url.absoluteString)") else { return }
+            url = newUrl
+        }
+
+        presentShareSheet(withItems: [ url, Link(title: "Shhare", url: url) ], fromView: self.view)
     }
 
     private func handleLog(message: WKScriptMessage) {
