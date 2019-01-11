@@ -49,6 +49,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var statusBarBackground: UIView!
     
     weak var notificationView: NotificationView?
+    weak var tabSwitcher: TabSwitcher?
 
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
@@ -679,8 +680,11 @@ extension MainViewController: BookmarksDelegate {
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func showTabSwitcher() {
-        Pixel.fire(pixel: .tabBarTabSwitcherPressed)
-        performSegue(withIdentifier: "ShowTabs", sender: self)
+        guard tabSwitcher == nil else {
+            tabSwitcher?.removeFromSuperview()
+            return
+        }
+        tabSwitcher = TabSwitcher.loadFromNib(into: self)
     }
 
 }
