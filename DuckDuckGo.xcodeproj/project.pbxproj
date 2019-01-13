@@ -178,8 +178,7 @@
 		85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85AE668D2097206E0014CF04 /* NotificationView.xib */; };
 		85AE6690209724120014CF04 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AE668F209724120014CF04 /* NotificationView.swift */; };
 		85AE66942098BAC10014CF04 /* home-row-instructions.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 85AE66932098BAC10014CF04 /* home-row-instructions.mp4 */; };
-		85B427B621E8E31A0087C469 /* TabSwitcher.xib in Resources */ = {isa = PBXBuildFile; fileRef = 85B427B521E8E31A0087C469 /* TabSwitcher.xib */; };
-		85B427B821E8E3270087C469 /* TabSwitcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B427B721E8E3270087C469 /* TabSwitcher.swift */; };
+		85B427BF21EBD7DE0087C469 /* PopupTabSwitcherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B427BE21EBD7DE0087C469 /* PopupTabSwitcherViewController.swift */; };
 		85B5470A1FE852CE0008E1E5 /* bloom-filter-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */; };
 		85B5470B1FE852CE0008E1E5 /* abp-filter-parser-packed.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */; };
 		85B5470C1FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js in Resources */ = {isa = PBXBuildFile; fileRef = 85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */; };
@@ -681,8 +680,7 @@
 		85AE668D2097206E0014CF04 /* NotificationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NotificationView.xib; sourceTree = "<group>"; };
 		85AE668F209724120014CF04 /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		85AE66932098BAC10014CF04 /* home-row-instructions.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "home-row-instructions.mp4"; sourceTree = "<group>"; };
-		85B427B521E8E31A0087C469 /* TabSwitcher.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabSwitcher.xib; sourceTree = "<group>"; };
-		85B427B721E8E3270087C469 /* TabSwitcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabSwitcher.swift; sourceTree = "<group>"; };
+		85B427BE21EBD7DE0087C469 /* PopupTabSwitcherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupTabSwitcherViewController.swift; sourceTree = "<group>"; };
 		85B547061FE852CE0008E1E5 /* bloom-filter-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "bloom-filter-packed.js"; path = "submodules/ios-js-support/src/bloom-filter-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547071FE852CE0008E1E5 /* abp-filter-parser-packed.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed.js"; sourceTree = SOURCE_ROOT; };
 		85B547081FE852CE0008E1E5 /* abp-filter-parser-packed-es2015.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "abp-filter-parser-packed-es2015.js"; path = "submodules/ios-js-support/src/abp-filter-parser-packed-es2015.js"; sourceTree = SOURCE_ROOT; };
@@ -1465,6 +1463,15 @@
 			name = Notifications;
 			sourceTree = "<group>";
 		};
+		85B427B921EBCE3B0087C469 /* TabSwitcher */ = {
+			isa = PBXGroup;
+			children = (
+				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
+				85B427BE21EBD7DE0087C469 /* PopupTabSwitcherViewController.swift */,
+			);
+			name = TabSwitcher;
+			sourceTree = "<group>";
+		};
 		85B9CB8321AEBD72009001F1 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -2182,9 +2189,7 @@
 				84E341991E2F7EFB00BDBA6F /* Main.storyboard */,
 				F17669D61E43401C003D3222 /* MainViewController.swift */,
 				8563A03B1F9288D600F04442 /* BrowserChromeManager.swift */,
-				851DFD86212C39D300D95F20 /* TabSwitcherButton.swift */,
-				85B427B521E8E31A0087C469 /* TabSwitcher.xib */,
-				85B427B721E8E3270087C469 /* TabSwitcher.swift */,
+				85B427B921EBCE3B0087C469 /* TabSwitcher */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -2737,7 +2742,6 @@
 				859872241F5743D800041CB8 /* FireAnimation.xib in Resources */,
 				85AE668E2097206E0014CF04 /* NotificationView.xib in Resources */,
 				85A313972028E78A00327D00 /* release_notes.txt in Resources */,
-				85B427B621E8E31A0087C469 /* TabSwitcher.xib in Resources */,
 				84E3419B1E2F7EFB00BDBA6F /* Main.storyboard in Resources */,
 				F1BE54511E69DDE000FCF649 /* Onboarding.storyboard in Resources */,
 				83A23D6320DC330000051F39 /* Feedback.storyboard in Resources */,
@@ -2984,7 +2988,6 @@
 				8505836F219F424500ED4EDB /* UIViewExtension.swift in Sources */,
 				8505836E219F424500ED4EDB /* RoundedRectangleView.swift in Sources */,
 				85058370219F424500ED4EDB /* SearchBarExtension.swift in Sources */,
-				85B427B821E8E3270087C469 /* TabSwitcher.swift in Sources */,
 				F114C55B1E66EB020018F95F /* NibLoading.swift in Sources */,
 				F103076D1E800F5C0059FEC7 /* EditBookmarkAlert.swift in Sources */,
 				F1BE545E1E69FB9900FCF649 /* OnboardingTutorialPageViewController.swift in Sources */,
@@ -3018,6 +3021,7 @@
 				F13B4BC01F180D8A00814661 /* TabsModel.swift in Sources */,
 				85AE6690209724120014CF04 /* NotificationView.swift in Sources */,
 				85B9CB8721AEBDB7009001F1 /* CenteredSearchHomeCell.swift in Sources */,
+				85B427BF21EBD7DE0087C469 /* PopupTabSwitcherViewController.swift in Sources */,
 				F194FAED1F14E2B3009B4DF8 /* UIFontExtension.swift in Sources */,
 				F1CDD3F21F16911700BE0581 /* AboutViewController.swift in Sources */,
 				F1E90C201E678E7C005E7E21 /* HomeControllerDelegate.swift in Sources */,

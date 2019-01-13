@@ -23,7 +23,9 @@ import Lottie
 protocol TabSwitcherButtonDelegate: NSObjectProtocol {
     
     func showTabSwitcher()
-    
+
+    func handleRelease(tabSwitcherButton: TabSwitcherButton, touch: UITouch)
+
 }
 
 class TabSwitcherButton: UIView {
@@ -115,23 +117,22 @@ class TabSwitcherButton: UIView {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(#function)
         tint(alpha: Constants.tintAlpha)
         delegate?.showTabSwitcher()
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print(#function)
         tint(alpha: 0)
 
         guard let touch = touches.first else { return }
-        guard point(inside: touch.location(in: self), with: event) else { return }
+        delegate?.handleRelease(tabSwitcherButton: self, touch: touch)
+
+//        guard point(inside: touch.location(in: self), with: event) else { return }
 //        delegate?.showTabSwitcher()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else { return }
-        print(#function, touch)
         let inside = point(inside: touch.location(in: self), with: event)
         tint(alpha: inside ? Constants.tintAlpha : 0)
     }

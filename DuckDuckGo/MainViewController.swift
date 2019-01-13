@@ -31,6 +31,9 @@ class MainViewController: UIViewController {
         return ThemeManager.shared.currentTheme.statusBarStyle
     }
 
+    @IBOutlet weak var tabSwitcherContainer: UIView!
+    @IBOutlet weak var tabSwitcherViewHeight: NSLayoutConstraint!
+
     @IBOutlet weak var customNavigationBar: UIView!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var fireButton: UIBarButtonItem!
@@ -49,7 +52,6 @@ class MainViewController: UIViewController {
     @IBOutlet weak var statusBarBackground: UIView!
     
     weak var notificationView: NotificationView?
-    weak var tabSwitcher: TabSwitcher?
 
     var omniBar: OmniBar!
     var chromeManager: BrowserChromeManager!
@@ -60,7 +62,9 @@ class MainViewController: UIViewController {
             containerViewTop.constant = constant
         }
     }
-    
+
+    weak var tabSwitcherController: PopupTabSwitcherViewController?
+
     fileprivate var homeController: HomeViewController?
     fileprivate var autocompleteController: AutocompleteViewController?
 
@@ -116,6 +120,10 @@ class MainViewController: UIViewController {
         if let controller = segue.destination as? FeedbackViewController {
             controller.prepareForSegue(isBrokenSite: true, url: currentTab?.url?.absoluteString)
             return
+        }
+
+        if let controller = segue.destination as? PopupTabSwitcherViewController {
+            tabSwitcherController = controller
         }
     }
 
@@ -225,6 +233,18 @@ class MainViewController: UIViewController {
         attachHomeScreen()
         homeController?.launchNewSearch()
         omniBar.becomeFirstResponder()
+    }
+
+    func switchToTab(tab: Tab) {
+        guard let index = tabManager.model.indexOf(tab: tab) else { return }
+        customNavigationBar.alpha = 1
+        allowContentUnderflow = false
+        select(tabAt: index)
+    }
+
+    func launchNewTab() {
+        attachHomeScreen()
+        homeController?.openedAsNewTab()
     }
 
     fileprivate func loadQuery(_ query: String) {
@@ -603,8 +623,7 @@ extension MainViewController: TabDelegate {
     }
 
     func tabDidRequestNewTab(_ tab: TabViewController) {
-        attachHomeScreen()
-        homeController?.openedAsNewTab()
+        launchNewTab()
     }
 
     func tab(_ tab: TabViewController, didRequestNewBackgroundTabForUrl url: URL) {
@@ -648,10 +667,7 @@ extension MainViewController: TabSwitcherDelegate {
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didSelectTab tab: Tab) {
-        guard let index = tabManager.model.indexOf(tab: tab) else { return }
-        customNavigationBar.alpha = 1
-        allowContentUnderflow = false
-        select(tabAt: index)
+        switchToTab(tab: tab)
     }
 
     func tabSwitcher(_ tabSwitcher: TabSwitcherViewController, didRemoveTab tab: Tab) {
@@ -680,11 +696,44 @@ extension MainViewController: BookmarksDelegate {
 extension MainViewController: TabSwitcherButtonDelegate {
     
     func showTabSwitcher() {
-        guard tabSwitcher == nil else {
-            tabSwitcher?.removeFromSuperview()
-            return
+        if tabSwitcherContainer.isHidden {
+            tabSwitcherController?.refresh()
+            let cellCount = tabSwitcherController?.cellCount ?? 0
+            tabSwitcherViewHeight.constant = CGFloat(cellCount * 50)
         }
-        tabSwitcher = TabSwitcher.loadFromNib(into: self)
+
+        tabSwitcherContainer.isHidden = !tabSwitcherContainer.isHidden
+    }
+
+    func tabSelected(tab: Tab) {
+        switchToTab(tab: tab)
+        tabSwitcherContainer.isHidden = true
+    }
+
+    func handleRelease(tabSwitcherButton: TabSwitcherButton, touch: UITouch) {
+
+        let point = touch.location(in: tabSwitcherController?.view)
+        guard let index = tabSwitcherController?.collectionView.indexPathForItem(at: point) else { return }
+        guard let action = tabSwitcherController?.actionFor(index: index) else { return }
+
+        switch action {
+
+        case .newTab:
+            launchNewTab()
+
+        case .manageTabs:
+            launchTabManager()
+
+        case .switchToTab(let index):
+            select(tabAt: index)
+
+        }
+
+        tabSwitcherContainer.isHidden = true
+    }
+
+    func launchTabManager() {
+        performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 
 }
