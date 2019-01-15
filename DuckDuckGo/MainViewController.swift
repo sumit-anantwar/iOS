@@ -124,6 +124,7 @@ class MainViewController: UIViewController {
 
         if let controller = segue.destination as? PopupTabSwitcherViewController {
             tabSwitcherController = controller
+            tabSwitcherController?.delegate = self
         }
     }
 
@@ -243,6 +244,7 @@ class MainViewController: UIViewController {
     }
 
     func launchNewTab() {
+        tabSwitcherContainer.isHidden = true
         attachHomeScreen()
         homeController?.openedAsNewTab()
     }
@@ -267,6 +269,8 @@ class MainViewController: UIViewController {
     }
 
     fileprivate func select(tabAt index: Int) {
+        showBars()
+        tabSwitcherContainer.isHidden = true
         let tab = tabManager.select(tabAt: index)
         select(tab: tab)
     }
@@ -654,6 +658,7 @@ extension MainViewController: TabDelegate {
     }
 
     func showBars() {
+        customNavigationBar.alpha = 1.0
         chromeManager.reset()
     }
 
@@ -694,7 +699,7 @@ extension MainViewController: BookmarksDelegate {
 }
 
 extension MainViewController: TabSwitcherButtonDelegate {
-    
+
     func showTabSwitcher() {
         if tabSwitcherContainer.isHidden {
             tabSwitcherController?.refresh()
@@ -732,7 +737,14 @@ extension MainViewController: TabSwitcherButtonDelegate {
         tabSwitcherContainer.isHidden = true
     }
 
+    func handleMove(tabSwitcherButton: TabSwitcherButton, touch: UITouch) {
+        let point = touch.location(in: tabSwitcherController?.view)
+        guard let index = tabSwitcherController?.collectionView.indexPathForItem(at: point) else { return }
+        tabSwitcherController?.collectionView.selectItem(at: index, animated: true, scrollPosition: .centeredHorizontally)
+    }
+
     func launchTabManager() {
+        tabSwitcherContainer.isHidden = true
         performSegue(withIdentifier: "ShowTabs", sender: self)
     }
 
@@ -761,4 +773,25 @@ extension MainViewController: Themable {
     }
     
 }
+
+extension MainViewController: PopupTabSwitcherDelegate {
+
+    func newTab() {
+        launchNewTab()
+    }
+
+    func manageTabs() {
+        launchTabManager()
+    }
+
+    func switchToTab(atIndex index: Int) {
+        select(tabAt: index)
+    }
+
+}
+
+extension MainViewController {
+
+}
+
 // swiftlint:enable file_length

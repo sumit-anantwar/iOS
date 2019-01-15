@@ -26,6 +26,8 @@ protocol TabSwitcherButtonDelegate: NSObjectProtocol {
 
     func handleRelease(tabSwitcherButton: TabSwitcherButton, touch: UITouch)
 
+    func handleMove(tabSwitcherButton: TabSwitcherButton, touch: UITouch)
+
 }
 
 class TabSwitcherButton: UIView {
@@ -135,6 +137,7 @@ class TabSwitcherButton: UIView {
         guard let touch = touches.first else { return }
         let inside = point(inside: touch.location(in: self), with: event)
         tint(alpha: inside ? Constants.tintAlpha : 0)
+        delegate?.handleMove(tabSwitcherButton: self, touch: touch)
     }
     
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {

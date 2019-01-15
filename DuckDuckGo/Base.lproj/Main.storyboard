@@ -9,6 +9,14 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="proximanova-bold.otf">
+            <string>ProximaNova-Bold</string>
+        </array>
+        <array key="proximanova-semibold.otf">
+            <string>ProximaNova-Semibold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--Main View Controller-->
         <scene sceneID="DKA-ax-iTU">
@@ -85,7 +93,7 @@
                                 <color key="barTintColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </toolbar>
                             <containerView hidden="YES" opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ug1-sO-Agm">
-                                <rect key="frame" x="119" y="328" width="240" height="300"/>
+                                <rect key="frame" x="135" y="347" width="240" height="300"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="300" id="GCz-93-dJk"/>
                                     <constraint firstAttribute="width" constant="240" id="Zbp-ct-cWx"/>
@@ -102,12 +110,12 @@
                             <constraint firstItem="nQT-PV-ULm" firstAttribute="top" secondItem="uBn-Md-Q2c" secondAttribute="top" id="BrS-Dd-c0g"/>
                             <constraint firstItem="iiL-6e-jxs" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="CfL-Ud-UIC"/>
                             <constraint firstItem="iiL-6e-jxs" firstAttribute="centerX" secondItem="uBn-Md-Q2c" secondAttribute="centerX" id="GYY-82-9YX"/>
-                            <constraint firstItem="Ug1-sO-Agm" firstAttribute="leading" secondItem="Ylj-oJ-fqD" secondAttribute="trailing" constant="-256" id="IKr-tT-r5b"/>
+                            <constraint firstItem="Ug1-sO-Agm" firstAttribute="trailing" secondItem="Ylj-oJ-fqD" secondAttribute="trailing" id="IKr-tT-r5b"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="top" secondItem="Ylj-oJ-fqD" secondAttribute="bottom" id="N6y-rD-Nne"/>
                             <constraint firstItem="lJT-0B-l2J" firstAttribute="width" secondItem="Vxt-xD-aBt" secondAttribute="width" id="NuH-hE-pWg"/>
                             <constraint firstItem="lJT-0B-l2J" firstAttribute="top" secondItem="nQT-PV-ULm" secondAttribute="bottom" id="P7O-RF-g4h"/>
                             <constraint firstItem="Ylj-oJ-fqD" firstAttribute="leading" secondItem="Vxt-xD-aBt" secondAttribute="leading" id="Piz-bL-YZd"/>
-                            <constraint firstItem="uBn-Md-Q2c" firstAttribute="bottom" secondItem="Ug1-sO-Agm" secondAttribute="bottom" constant="39" id="Tm9-lF-YFP"/>
+                            <constraint firstItem="uBn-Md-Q2c" firstAttribute="bottom" secondItem="Ug1-sO-Agm" secondAttribute="bottom" constant="20" id="Tm9-lF-YFP"/>
                             <constraint firstItem="Krm-hA-s9u" firstAttribute="bottom" secondItem="uBn-Md-Q2c" secondAttribute="bottom" id="UsQ-i7-pjr"/>
                             <constraint firstItem="lJT-0B-l2J" firstAttribute="centerX" secondItem="uBn-Md-Q2c" secondAttribute="centerX" id="d7x-EX-84Q"/>
                             <constraint firstAttribute="top" secondItem="iiL-6e-jxs" secondAttribute="top" id="ea4-zN-0Co"/>
@@ -209,65 +217,79 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="10" id="NgQ-R3-cir">
-                            <size key="itemSize" width="222" height="50"/>
+                            <size key="itemSize" width="235" height="50"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="manage" id="sT3-xf-6v3" customClass="PopupTabSwitcherCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="9" y="0.0" width="222" height="50"/>
+                                <rect key="frame" x="2.5" y="0.0" width="235" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="222" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="235" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Manage Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWH-SO-nd3">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Manage Tabs" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gWH-SO-nd3">
                                             <rect key="frame" x="72" y="15" width="102" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                            <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="gWH-SO-nd3" firstAttribute="centerX" secondItem="sT3-xf-6v3" secondAttribute="centerX" id="RpZ-Tf-KXn"/>
+                                    <constraint firstItem="gWH-SO-nd3" firstAttribute="centerY" secondItem="sT3-xf-6v3" secondAttribute="centerY" id="l1F-ke-0AD"/>
+                                </constraints>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="tab" id="a8x-o4-d7S" customClass="PopupTabSwitcherCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="9" y="50" width="222" height="50"/>
+                                <rect key="frame" x="2.5" y="50" width="235" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="222" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="235" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Tab Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gf-vf-CdE">
-                                            <rect key="frame" x="72" y="15" width="68" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Tab Data" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Gf-vf-CdE">
+                                            <rect key="frame" x="10" y="10" width="87" height="30"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Semibold" family="Proxima Nova" pointSize="12"/>
+                                            <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="7Gf-vf-CdE" firstAttribute="centerX" secondItem="a8x-o4-d7S" secondAttribute="centerX" id="KtB-Ys-P2T"/>
+                                    <constraint firstItem="7Gf-vf-CdE" firstAttribute="width" secondItem="a8x-o4-d7S" secondAttribute="width" constant="-20" id="aez-4e-QZz"/>
+                                    <constraint firstItem="7Gf-vf-CdE" firstAttribute="centerY" secondItem="a8x-o4-d7S" secondAttribute="centerY" id="pOz-KJ-wvF"/>
+                                    <constraint firstItem="7Gf-vf-CdE" firstAttribute="height" secondItem="a8x-o4-d7S" secondAttribute="height" id="yO8-nR-buh"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="label" destination="7Gf-vf-CdE" id="t8f-mE-p17"/>
+                                </connections>
                             </collectionViewCell>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" misplaced="YES" reuseIdentifier="add" id="l7T-UT-Edf" customClass="PopupTabSwitcherCell" customModule="DuckDuckGo" customModuleProvider="target">
-                                <rect key="frame" x="9" y="100" width="222" height="50"/>
+                                <rect key="frame" x="2.5" y="100" width="235" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                    <rect key="frame" x="0.0" y="0.0" width="222" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="235" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add New" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Blj-BS-V8d">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Add New" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Blj-BS-V8d">
                                             <rect key="frame" x="72" y="15" width="70" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" name="ProximaNova-Bold" family="Proxima Nova" pointSize="12"/>
+                                            <color key="textColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                 </view>
                                 <color key="backgroundColor" red="0.57647058819999997" green="0.75294117650000003" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Blj-BS-V8d" firstAttribute="centerX" secondItem="l7T-UT-Edf" secondAttribute="centerX" id="pXv-t1-fHG"/>
+                                    <constraint firstItem="Blj-BS-V8d" firstAttribute="centerY" secondItem="l7T-UT-Edf" secondAttribute="centerY" id="sYI-Lo-6O9"/>
+                                </constraints>
                             </collectionViewCell>
                         </cells>
                         <connections>

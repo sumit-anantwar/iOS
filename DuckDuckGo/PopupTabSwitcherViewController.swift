@@ -8,6 +8,14 @@
 
 import UIKit
 
+protocol PopupTabSwitcherDelegate {
+
+    func newTab()
+    func switchToTab(atIndex: Int)
+    func manageTabs()
+
+}
+
 class PopupTabSwitcherViewController: UICollectionViewController {
 
     enum Action {
@@ -17,6 +25,10 @@ class PopupTabSwitcherViewController: UICollectionViewController {
         case manageTabs
 
     }
+
+    var delegate: PopupTabSwitcherDelegate?
+
+    var selectedIndex: IndexPath?
 
     lazy var model = TabsModel.get()
 
@@ -30,6 +42,11 @@ class PopupTabSwitcherViewController: UICollectionViewController {
 
     var cellCount: Int {
         return count == 0 ? 1 : count + 2
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        collectionView.allowsMultipleSelection = false
     }
 
     func refresh() {
@@ -58,26 +75,65 @@ class PopupTabSwitcherViewController: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
         if count == 0 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "manage", for: indexPath)
+            return updateSelected(collectionView.dequeueReusableCell(withReuseIdentifier: "manage", for: indexPath), indexPath == selectedIndex)
         }
 
         if indexPath.row == 0 {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "manage", for: indexPath)
+            return updateSelected(collectionView.dequeueReusableCell(withReuseIdentifier: "manage", for: indexPath), indexPath == selectedIndex)
         } else if indexPath.row > count {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath)
+            return updateSelected(collectionView.dequeueReusableCell(withReuseIdentifier: "add", for: indexPath), indexPath == selectedIndex)
         } else {
-            return collectionView.dequeueReusableCell(withReuseIdentifier: "tab", for: indexPath)
+            let cell = updateSelected(collectionView.dequeueReusableCell(withReuseIdentifier: "tab", for: indexPath), indexPath == selectedIndex)
+            cell.label.text = model?.tabs[indexPath.row - 1].link?.title
+            return cell
         }
 
     }
 
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("***", #function)
+
+        if indexPath.row == 0 {
+            delegate?.manageTabs()
+        } else if indexPath.row > count {
+            delegate?.newTab()
+        } else {
+            delegate?.switchToTab(atIndex: indexPath.row - 1)
+        }
+
+    }
+
+    func hoverOver(indexPath: IndexPath) {
+        var indexes = [ indexPath ]
+        if let previousIndex = selectedIndex {
+            indexes.append(previousIndex)
+        }
+        collectionView.reloadItems(at: indexes)
+        selectedIndex = indexPath
+    }
+
+    private func updateSelected(_ cell: UICollectionViewCell, _ selected: Bool) -> PopupTabSwitcherCell {
+        guard let cell = cell as? PopupTabSwitcherCell else {
+            fatalError("unable to cast PopupTabSwitcherCell")
+        }
+
+        cell.isSelected = selected
+        return cell
     }
 
 }
 
 class PopupTabSwitcherCell: UICollectionViewCell {
+
+    @IBOutlet weak var label: UILabel!
+
+    override var isSelected: Bool {
+        didSet {
+            // print(#function, isSelected, oldValue)
+            layer.borderColor = UIColor.black.cgColor
+            layer.borderWidth = isSelected ? 2.0 : 0.0
+        }
+    }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
